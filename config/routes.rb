@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
   root to: 'homes#top'
-
+  
   devise_for :users
 
   resources :books do
+    collection do
+      get :top_liked
+    end
     resources :favorites, only: [:create, :destroy]
     resources :book_comments, only: [:create, :destroy]
   end
-  
-  resources :users, only: [:index, :show, :edit, :update] do
+
+  resources :users do
     member do
       get :following, :followers
     end
