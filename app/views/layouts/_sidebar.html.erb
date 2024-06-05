@@ -1,0 +1,16 @@
+<p>
+  <strong>フォロー数:</strong>
+  <%= current_user.following.count %>
+</p>
+<p>
+  <strong>フォロワー数:</strong>
+  <%= current_user.followers.count %>
+</p>
+<p>
+  <strong>Following:</strong>
+  <%= link_to current_user.following.count, following_user_path(current_user) %>
+</p>
+<p>
+  <strong>Followers:</strong>
+  <%= link_to current_user.followers.count, followers_user_path(current_user) %>
+</p>

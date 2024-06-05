@@ -1,0 +1,32 @@
+<div class="mx-auto col-11 col-sm-10 col-lg-8 col-xl-6">
+  <h1>Welcome to <i class="fas fa-book"></i><strong>Bookers</strong>!!</h1>
+  <p>In <i class="fas fa-book"></i><strong>Bookers,</strong></p>
+  <p>you can share and exchange your opinions, impressions, and emotions</p>
+  <p>about various books!</p>
+
+  <div class="btn-wrapper col-10 mx-auto">
+    <div class="row">
+      <%= link_to 'Log in', new_user_session_path, class: "btn btn-info btn-sm btn-block mb-3 sign_in" %>
+    </div>
+    <div class="row">
+      <%= link_to 'Sign up', new_user_registration_path, class: "btn btn-success btn-sm btn-block sign_up" %>
+    </div>
+  </div>
+
+  <% if user_signed_in? %>
+    <div class="search-form mt-4">
+      <%= form_with url: search_path, method: :get, local: true do %>
+        <div class="form-group">
+          <%= select_tag :range, options_for_select([['Users', 'User'], ['Books', 'Book']]), class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= text_field_tag :word, params[:word], placeholder: "Search", class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= select_tag :search_method, options_for_select([['完全一致', 'exact'], ['前方一致', 'forward'], ['後方一致', 'backward'], ['部分一致', 'partial']]), class: "form-control" %>
+        </div>
+        <%= submit_tag "Search", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

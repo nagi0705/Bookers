@@ -1,0 +1,11 @@
+<!-- app/views/users/following.html.erb -->
+<h3>フォロー中</h3>
+<% @user.following.each do |user| %>
+  <%= link_to user.name, user %>
+<% end %>
+
+<!-- app/views/users/followers.html.erb -->
+<h3>フォロワー</h3>
+<% @user.followers.each do |user| %>
+  <%= link_to user.name, user %>
+<% end %>

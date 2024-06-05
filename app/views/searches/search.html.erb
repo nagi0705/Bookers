@@ -1,0 +1,14 @@
+<h1>Search Results</h1>
+
+<% if @range == "User" %>
+  <h2>Users</h2>
+  <% @users.each do |user| %>
+    <p><%= link_to user.name, user_path(user) %></p>
+  <% end %>
+<% else %>
+  <h2>Books</h2>
+  <% @books.each do |book| %>
+    <p><%= link_to book.title, book_path(book) %></p>
+    <p><%= book.body %></p>
+  <% end %>
+<% end %>

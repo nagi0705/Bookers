@@ -1,0 +1,13 @@
+.search-form {
+  margin: 10px 0;
+}
+
+.search-form .form-control {
+  display: inline-block;
+  width: auto;
+  margin-right: 5px;
+}
+
+.search-form .btn {
+  vertical-align: middle;
+}

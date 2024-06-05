@@ -1,0 +1,16 @@
+<header>
+  <!-- 他のヘッダーの内容 -->
+  <% if user_signed_in? %>
+    <div class="search-form">
+      <%= form_with url: search_path, method: :get, local: true do %>
+        <div class="form-group">
+          <%= select_tag :range, options_for_select([['Users', 'User'], ['Books', 'Book']]), class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= text_field_tag :word, params[:word], placeholder: "Search", class: "form-control" %>
+        </div>
+        <%= submit_tag "Search", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  <% end %>
+</header>

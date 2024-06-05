@@ -1,0 +1,103 @@
+  <div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-3">
+      <h2>User info</h2>
+      <%= image_tag(@user.profile_image.presence || 'noimage.jpg', class: "img-fluid", width: "200", height: "200") %>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <td><strong><%= @user.name %></strong></td>
+          </tr>
+          <tr>
+            <th>Introduction</th>
+            <td><%= @user.introduction %></td>
+          </tr>
+          <tr>
+            <th>Following</th>
+            <td><%= link_to @user.following.count, following_user_path(@user) %></td>
+          </tr>
+          <tr>
+            <th>Followers</th>
+            <td><%= link_to @user.followers.count, followers_user_path(@user) %></td>
+          </tr>
+        </tbody>
+      </table>
+      <%= link_to edit_user_path(@user), class: 'btn btn-outline-secondary btn-block' do %>
+        <i class="fas fa-user-cog"></i>
+      <% end %>
+      <h2 class="mt-3">New book</h2>
+      <%= form_with(model: @user.books.build, local: true) do |form| %>
+        <div class="form-group">
+          <%= form.label :title %>
+          <%= form.text_field :title, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= form.label :body %>
+          <%= form.text_area :body, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= form.submit "Create Book", class: 'btn btn-success' %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-8 offset-md-1">
+      <h2>Book detail</h2>
+      <table class="table table-hover">
+        <thead>
+        </thead>
+        <tbody>
+          <% @books.each do |book| %>
+            <% if book.id.present? %>
+              <tr>
+                <td>
+                  <%= image_tag(@user.profile_image.presence || 'noimage.jpg', class: "img-fluid", width: "80", height: "80") %>
+                  <br>
+                  <%= link_to @user.name, user_path(@user) %>
+                </td>
+                <td><%= link_to book.title, book_path(book) %></td>
+                <td><%= book.body %></td>
+                <% if book.user == current_user %>
+                  <td><%= link_to 'Edit', edit_book_path(book), class: 'btn btn-sm btn-success' %></td>
+                  <td><%= link_to 'Destroy', book_path(book), method: :delete, data: { confirm: "本当に消しますか?" }, class: 'btn btn-sm btn-danger' %></td>
+                <% end %>
+              </tr>
+              <tr>
+                <td colspan="4">
+                  <div>
+                    <% if current_user.favorites.exists?(book_id: book.id) %>
+                      <%= link_to 'いいねを外す', book_favorite_path(book, current_user.favorites.find_by(book_id: book.id)), method: :delete %>
+                    <% else %>
+                      <%= link_to 'いいね', book_favorites_path(book), method: :post %>
+                    <% end %>
+                    <span><%= book.favorites.count %></span>
+                  </div>
+
+                  <h3>Comments</h3>
+                  <%= form_with(model: [book, book.book_comments.build], local: true) do |form| %>
+                    <div class="form-group">
+                      <%= form.label :comment %>
+                      <%= form.text_area :comment, class: 'form-control' %>
+                    </div>
+                    <div class="form-group">
+                      <%= form.submit "コメントを投稿", class: 'btn btn-primary' %>
+                    </div>
+                  <% end %>
+
+                  <% book.book_comments.each do |comment| %>
+                    <% if comment.user %>
+                      <p><strong><%= comment.user.name %>:</strong> <%= comment.comment %></p>
+                      <% if comment.user == current_user %>
+                        <%= link_to '削除', book_book_comment_path(book, comment), method: :delete, data: { confirm: 'コメントを削除しますか？' } %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
