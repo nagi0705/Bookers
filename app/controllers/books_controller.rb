@@ -1,4 +1,4 @@
-# app/controllers/books_controller.rb
+
 class BooksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_book, only: [:show, :edit, :update, :destroy]
@@ -9,6 +9,7 @@ class BooksController < ApplicationController
 
   def show
     @user = @book.user
+    @book.increment_views_count
   end
 
   def new
