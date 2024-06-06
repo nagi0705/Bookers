@@ -1,3 +1,4 @@
+# config/routes.rb
 Rails.application.routes.draw do
   root to: 'homes#top'
   
@@ -21,4 +22,9 @@ Rails.application.routes.draw do
 
   get 'home/about', to: 'homes#about', as: 'about'
   get 'search', to: 'searches#search'
+
+  resources :conversations, only: [:index, :create, :show] do
+  resources :messages, only: [:create]
+  resources :relationships, only: [:create, :destroy]  
+  end
 end

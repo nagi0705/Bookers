@@ -1,3 +1,4 @@
+# app/models/user.rb
 class User < ApplicationRecord
   # Deviseの設定
   devise :database_authenticatable, :registerable,
@@ -12,6 +13,10 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :favorited_books, through: :favorites, source: :book
   has_many :book_comments, dependent: :destroy # 追加
+
+  # DM機能のアソシエーション
+  has_many :conversations, foreign_key: :sender_id
+  has_many :messages
 
   # Active Storageの設定
   has_one_attached :profile_image

@@ -1,0 +1,12 @@
+<!-- app/views/conversations/index.html.erb -->
+<h1>Conversations</h1>
+<%= form_with url: conversations_path, local: true do |f| %>
+  <%= f.hidden_field :sender_id, value: current_user.id %>
+  <%= f.label :receiver_id %>
+  <%= f.collection_select :receiver_id, current_user.following.select { |user| user.following?(current_user) }, :id, :name %>
+  <%= f.submit "Start Conversation" %>
+<% end %>
+
+<% @conversations.each do |conversation| %>
+  <%= link_to "Conversation with #{conversation.receiver.name}", conversation_path(conversation) %>
+<% end %>

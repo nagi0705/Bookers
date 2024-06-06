@@ -15,3 +15,14 @@ import "../stylesheets/application";
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('a[data-remote=true], form[data-remote=true]').forEach((element) => {
+    element.addEventListener('ajax:success', (event) => {
+      // handle success
+    });
+    element.addEventListener('ajax:error', (event) => {
+      // handle error
+    });
+  });
+});

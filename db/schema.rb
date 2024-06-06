@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_02_002129) do
+ActiveRecord::Schema.define(version: 2024_06_06_004125) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -59,6 +59,13 @@ ActiveRecord::Schema.define(version: 2024_06_02_002129) do
     t.index ["user_id"], name: "index_books_on_user_id"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "book_id", null: false
@@ -67,6 +74,14 @@ ActiveRecord::Schema.define(version: 2024_06_02_002129) do
     t.index ["book_id"], name: "index_favorites_on_book_id"
     t.index ["user_id", "book_id"], name: "index_favorites_on_user_id_and_book_id", unique: true
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "conversation_id"
+    t.integer "user_id"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "relationships", force: :cascade do |t|

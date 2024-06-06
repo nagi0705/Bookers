@@ -1,0 +1,12 @@
+<!-- app/views/users/_user.html.erb -->
+<% if current_user.following?(user) %>
+  <%= form_with(url: relationship_path(user), method: :delete, local: true) do %>
+    <%= hidden_field_tag :followed_id, user.id %>
+    <%= submit_tag 'Unfollow' %>
+  <% end %>
+<% else %>
+  <%= form_with(url: relationships_path, method: :post, local: true) do %>
+    <%= hidden_field_tag :followed_id, user.id %>
+    <%= submit_tag 'Follow' %>
+  <% end %>
+<% end %>

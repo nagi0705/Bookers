@@ -1,0 +1,11 @@
+<!-- app/views/conversations/show.html.erb -->
+<h1>Conversation with <%= @conversation.receiver.name %></h1>
+
+<%= form_with model: [@conversation, Message.new], local: true do |f| %>
+  <%= f.text_area :body %>
+  <%= f.submit "Send" %>
+<% end %>
+
+<% @messages.each do |message| %>
+  <p><%= message.user.name %>: <%= message.body %></p>
+<% end %>
