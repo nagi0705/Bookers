@@ -44,6 +44,13 @@ class BooksController < ApplicationController
     redirect_to books_url, notice: 'Book was successfully destroyed.'
   end
 
+  def top_liked
+    @books = Book.joins(:favorites)
+                 .where(favorites: { created_at: 1.week.ago..Time.current })
+                 .group('books.id')
+                 .order('COUNT(favorites.id) DESC')
+  end
+
   private
 
   def set_book

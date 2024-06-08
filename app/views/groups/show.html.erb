@@ -1,10 +1,27 @@
+<!-- app/views/groups/show.html.erb -->
 <h1><%= @group.name %></h1>
-
 <p><%= @group.description %></p>
+<p>Owner: <%= @group.owner.name %></p>
+<p>Members: <%= @group.users.count %></p>
+
+<% if current_user != @group.owner %>
+  <% if @group.users.include?(current_user) %>
+    <%= button_to 'Leave this group', leave_group_path(@group), method: :delete, class: 'btn btn-danger' %>
+  <% else %>
+    <%= button_to 'Join this group', join_group_path(@group), method: :post, class: 'btn btn-primary' %>
+  <% end %>
+<% end %>
+
+<h2>Members</h2>
+<ul>
+  <% @group.users.each do |member| %>
+    <li><%= member.name %></li>
+  <% end %>
+</ul>
 
 <% if @group.owner == current_user %>
-  <%= link_to 'Edit', edit_group_path(@group), class: 'btn btn-secondary' %> |
-  <%= link_to 'Delete', group_path(@group), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  <%= link_to 'Edit', edit_group_path(@group), class: 'btn btn-secondary' %>
+  <%= link_to 'Destroy', group_path(@group), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
 <% end %>
 
 <%= link_to 'Back to Groups', groups_path, class: 'btn btn-primary' %>

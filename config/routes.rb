@@ -1,3 +1,4 @@
+# config/routes.rb
 Rails.application.routes.draw do
   root to: 'homes#top'
 
@@ -11,15 +12,21 @@ Rails.application.routes.draw do
     resources :book_comments, only: [:create, :destroy]
   end
 
-  resources :users do
+  resources :users, only: [:index, :show, :edit, :update] do
     member do
       get :following, :followers
     end
   end
 
   resources :relationships, only: [:create, :destroy]
-  resources :groups
-  
+
+  resources :groups do
+    member do
+      post 'join'
+      delete 'leave'
+    end
+  end
+
   get 'home/about', to: 'homes#about', as: 'about'
   get 'search', to: 'searches#search'
 end

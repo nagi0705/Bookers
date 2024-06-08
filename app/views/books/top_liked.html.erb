@@ -1,9 +1,13 @@
+<!-- app/views/books/top_liked.html.erb -->
 <h1>Top Liked Books in the Past Week</h1>
 
-<% @books.each do |book| %>
-  <div>
-    <h2><%= link_to book.title, book_path(book) %></h2>
-    <p><%= book.body %></p>
-    <p>Liked by <%= book.favorites.count %> people</p>
-  </div>
+<% if @books.present? %>
+  <% @books.each do |book| %>
+    <div>
+      <h2><%= link_to book.title, book_path(book) %></h2>
+      <p><%= book.body %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>No books found for the past week.</p>
 <% end %>
