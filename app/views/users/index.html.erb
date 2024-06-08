@@ -45,6 +45,7 @@
     <!-- All Users List -->
     <div class="col-md-8 offset-md-1">
       <h2>Users</h2>
+      <%= link_to 'Groups', groups_path, class: 'btn btn-primary' %>
       <table class="table">
         <thead>
           <tr>
@@ -59,7 +60,7 @@
             <tr>
               <td><%= image_tag(user.profile_image.presence || 'noimage.jpg', class: "img-fluid", width: "80", height: "80") %></td>
               <td><%= user.name %></td>
-              <td><%= link_to 'Show', user_path(user) %></td>
+              <td><%= link_to 'Show', user_path(user), class: 'btn btn-secondary' %></td>
               <td><%= render 'follow_form', user: user %></td>
             </tr>
           <% end %>

@@ -3,6 +3,7 @@ class Book < ApplicationRecord
   belongs_to :user
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
+  has_many :ratings, dependent: :destroy
 
   # デフォルト値の設定
   after_initialize :set_defaults, unless: :persisted?

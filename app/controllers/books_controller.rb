@@ -1,4 +1,4 @@
-
+# app/controllers/books_controller.rb
 class BooksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_book, only: [:show, :edit, :update, :destroy]
@@ -9,7 +9,7 @@ class BooksController < ApplicationController
 
   def show
     @user = @book.user
-    @book.increment_views_count
+    @average_rating = @book.ratings.average(:value).to_f.round(2)
   end
 
   def new
@@ -19,6 +19,9 @@ class BooksController < ApplicationController
   def create
     @book = current_user.books.build(book_params)
     if @book.save
+      if params[:book][:rating].present?
+        @book.ratings.create(user: current_user, value: params[:book][:rating])
+      end
       redirect_to @book, notice: 'Book was successfully created.'
     else
       render :new
@@ -41,13 +44,6 @@ class BooksController < ApplicationController
     redirect_to books_url, notice: 'Book was successfully destroyed.'
   end
 
-  def top_liked
-    @books = Book.joins(:favorites)
-                 .where(favorites: { created_at: 1.week.ago..Time.current })
-                 .group('books.id')
-                 .order('COUNT(favorites.id) DESC')
-  end
-
   private
 
   def set_book
@@ -55,6 +51,6 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :rating)
   end
 end

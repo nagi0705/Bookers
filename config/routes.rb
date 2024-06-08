@@ -1,7 +1,6 @@
-# config/routes.rb
 Rails.application.routes.draw do
   root to: 'homes#top'
-  
+
   devise_for :users
 
   resources :books do
@@ -19,12 +18,8 @@ Rails.application.routes.draw do
   end
 
   resources :relationships, only: [:create, :destroy]
-
+  resources :groups
+  
   get 'home/about', to: 'homes#about', as: 'about'
   get 'search', to: 'searches#search'
-
-  resources :conversations, only: [:index, :create, :show] do
-  resources :messages, only: [:create]
-  resources :relationships, only: [:create, :destroy]  
-  end
 end
