@@ -1,8 +1,12 @@
 # config/routes.rb
 Rails.application.routes.draw do
-  root to: 'homes#top'
-
   devise_for :users
+
+  resources :users, only: [:index, :show, :edit, :update] do
+    member do
+      get :following, :followers
+    end
+  end
 
   resources :books do
     collection do
@@ -12,21 +16,17 @@ Rails.application.routes.draw do
     resources :book_comments, only: [:create, :destroy]
   end
 
-  resources :users, only: [:index, :show, :edit, :update] do
-    member do
-      get :following, :followers
-    end
-  end
-
-  resources :relationships, only: [:create, :destroy]
-
   resources :groups do
     member do
       post 'join'
       delete 'leave'
     end
+    resources :events, only: [:new, :create]
   end
 
+  resources :relationships, only: [:create, :destroy]
+
+  root 'homes#top'
   get 'home/about', to: 'homes#about', as: 'about'
   get 'search', to: 'searches#search'
 end

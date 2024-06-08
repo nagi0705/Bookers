@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_08_052336) do
+ActiveRecord::Schema.define(version: 2024_06_08_103029) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -65,6 +65,15 @@ ActiveRecord::Schema.define(version: 2024_06_08_052336) do
     t.integer "receiver_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.integer "group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_events_on_group_id"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -151,6 +160,7 @@ ActiveRecord::Schema.define(version: 2024_06_08_052336) do
   add_foreign_key "book_comments", "books"
   add_foreign_key "book_comments", "users"
   add_foreign_key "books", "users"
+  add_foreign_key "events", "groups"
   add_foreign_key "favorites", "books"
   add_foreign_key "favorites", "users"
   add_foreign_key "group_users", "groups"

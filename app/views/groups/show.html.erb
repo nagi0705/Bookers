@@ -22,6 +22,7 @@
 <% if @group.owner == current_user %>
   <%= link_to 'Edit', edit_group_path(@group), class: 'btn btn-secondary' %>
   <%= link_to 'Destroy', group_path(@group), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  <%= link_to 'Notice an Event', new_group_event_path(@group), class: 'btn btn-secondary' %>
 <% end %>
 
 <%= link_to 'Back to Groups', groups_path, class: 'btn btn-primary' %>

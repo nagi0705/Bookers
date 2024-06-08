@@ -1,8 +1,7 @@
 class GroupMailer < ApplicationMailer
-  def event_notification(group, user, event)
+  def event_notification(group, event)
     @group = group
-    @user = user
     @event = event
-    mail(to: @user.email, subject: 'New Event Notification')
+    mail(to: @group.users.pluck(:email), subject: "New Event in #{@group.name}")
   end
 end

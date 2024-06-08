@@ -1,7 +1,7 @@
+# app/models/group.rb
 class Group < ApplicationRecord
-  belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
+  belongs_to :owner, class_name: 'User'
   has_many :group_users
   has_many :users, through: :group_users
-
-  validates :name, presence: true
+  has_many :events
 end

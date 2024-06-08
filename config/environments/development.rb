@@ -76,7 +76,11 @@ Rails.application.configure do
 
   config.hosts << "86b28d8c45e64e6d9a18c338daf2a2c2.vfs.cloud9.ap-southeast-2.amazonaws.com"
   config.hosts.clear
-
+  
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # 追加部分
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
 end
